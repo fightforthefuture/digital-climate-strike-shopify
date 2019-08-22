@@ -1,0 +1,61 @@
+version: "3.7"
+
+networks:
+  backend:
+
+x-common-variables: &common-variables
+  WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+  NODE_ENV: development
+  RAILS_ENV: development
+  RACK_ENV: development
+  SHOPIFY_API_KEY: ${GCS_SHOPIFY_API_KEY:-FAKE_API_KEY}
+  SHOPIFY_API_SECRET: ${GCS_SHOPIFY_API_SECRET:-FAKE_SECRET}
+  app_host: ${APP_HOST:-shopify.fightforthefuture.io}
+
+services:
+  app: &app
+    image: fightforthefuture/shopify-global-climate-strikes-app:development
+    build:
+      target: development
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src
+    volumes:
+      - .:/usr/src
+    stdin_open: true
+    tty: true
+
+  backend:
+    <<: *app
+    command: bundle exec foreman start -f Procfile.dev
+    entrypoint: /usr/src/entrypoint
+    ports:
+      - 80:3000
+      - 443:3000
+      - 3035:3035
+    environment:
+      <<: *common-variables
+    networks:
+      - backend
+
+  test:
+    <<: *app
+    image: fightforthefuture/shopify-global-climate-strikes-app:test
+    build:
+      target: testing
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec rspec
+    environment:
+      <<: *common-variables
+      RAILS_ENV: test
+      RACK_ENV: test
+    depends_on:
+      - chrome
+    networks:
+      - backend
+
+  chrome:
+    image: selenium/standalone-chrome
+    networks:
+      - backend

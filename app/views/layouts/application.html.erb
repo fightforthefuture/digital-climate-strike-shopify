@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Digital Climate Strike Shopify App</title>
+    <%= stylesheet_pack_tag 'hello_vue', media: 'all' %>
+    <%= javascript_pack_tag 'hello_vue' %>
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= content_tag(:div, nil, id: 'shopify-app-init', data: {
+      api_key: ShopifyApp.configuration.api_key,
+      shop_origin: ("https://#{ @shop_session.url }" if @shop_session),
+      debug: Rails.env.development?,
+      forceRedirect: Rails.env.development? || Rails.env.test? ? 'false' : 'true'
+    } ) %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
