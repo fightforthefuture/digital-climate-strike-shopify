@@ -1,7 +1,5 @@
 # frozen_string_literal: true
-
+#:nocov:
 class HomeController < AuthenticatedController
-  def index
-    head :ok
-  end
+  def index; end
 end
