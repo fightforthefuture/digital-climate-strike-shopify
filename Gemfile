@@ -15,7 +15,7 @@ gem 'aws-sdk-s3', require: false
 
 group :development, :test do
   gem 'dotenv-rails'
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-byebug'
 end
 
 group :development do
@@ -32,13 +32,14 @@ group :development do
   gem 'reek'
   gem 'rspec-rails', '~> 3.8'
   gem 'fuubar', '2.2.0'
-  gem 'simplecov', '0.14.1'
 end
 
 group :test do
+  gem 'factory_bot_rails'
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'simplecov', '0.14.1', require: false, group: :test
 end
 
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

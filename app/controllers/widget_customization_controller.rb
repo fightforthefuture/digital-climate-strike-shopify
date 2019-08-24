@@ -1,7 +1,8 @@
-class WidgetCustomizationController < ApplicationController
+class WidgetCustomizationController < AuthenticatedController
   def update
     if current_shop.present?
-      puts widget_customization_params
+      current_shop.update widget_customization_params
+      current_shop.update_script_vars
       head :ok
     else
       render json: { errors: [
@@ -28,7 +29,7 @@ class WidgetCustomizationController < ApplicationController
              :force_full_page_widget,
              :full_page_display_start_date,
              :iframe_host,
-             :max_cookie_expiration_days,
+             :cookie_expiration_days,
              :show_close_button_on_full_page_widget)
   end
 end

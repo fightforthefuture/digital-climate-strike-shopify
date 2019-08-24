@@ -1,15 +1,16 @@
+#:nocov:
 module SessionRepository
   extend ActiveSupport::Autoload
 
   autoload :Shop
 
   class << self
-    def store(*args)
-      Shop.store(*args)
+    def store(session)
+      ::Shop.store(session)
     end
 
-    def retrieve(*args)
-      Shop.retrieve(*args)
+    def retrieve(id)
+      ::Shop.retrieve(id)
     end
   end
 end
