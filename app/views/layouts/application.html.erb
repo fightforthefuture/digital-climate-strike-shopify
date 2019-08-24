@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Digital Climate Strike Shopify App</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <% if current_shop.present? %>
+      <%= content_tag(:div, nil, id: 'shopify-app-init', data: {
+        api_key: ShopifyApp.configuration.api_key,
+        shop_origin: ("https://#{ @shop_session.url }" if @shop_session),
+        debug: Rails.env.development?,
+        forceRedirect: Rails.env.development? || Rails.env.test? ? 'false' : 'true'
+      } ) %>
+    <% end %>
+
+    <%= stylesheet_pack_tag 'digital_climate_strike_app', media: 'all' %>
+    <%= javascript_pack_tag 'digital_climate_strike_app' %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
