@@ -1,23 +1,46 @@
 ## Contributing to this repository
 
-Pending
+The shopify app consist of:
+
+1. Backend powered by Ruby on Rails. It's in charge of creating the widget customization variables script, 
+  and shopify script tags for each authenticated shop.
+2. Shopify App engine for shop authentication.
 
 ## Requirements 
 
-Pending
+- Ruby. The project has been built on Ruby 2.6.1
+
+NOTE: If you use docker, then everything is ready for you. You will just need to use `docker-compose` and voilà.
 
 ## Build Setup
 
-Pending
+### Development
+#### Without Docker
 
-## Linting
+```
+# install dependencies
+$ bundle install
 
-Pending
+# setup db
+$ bundle exec rails db:setup
 
-## Automated Deploys
+# start development server
+$ bundle exec rails s
+```
 
-Pending
+#### With Docker
 
-# Dev Notes
+```
+# build the docker image
+$ docker-compose build
 
-Pending
+# setup db
+$ docker-compose run --rm backend bundle exec rails db:setup
+
+# start development server
+$ docker-compose up -d backend
+```
+
+### Production
+PENDING
+
