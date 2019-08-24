@@ -93,7 +93,7 @@
                       </v-flex>
 
                       <v-slider
-                        v-model="maxcookieExpirationDays"
+                        v-model="cookieExpirationDays"
                         thumb-label="always"
                         :max="max"
                         :min="min"
@@ -139,7 +139,7 @@
        snackbar: false,
        max: 30,
        min: 1,
-       maxcookieExpirationDays: 1,
+       cookieExpirationDays: 1,
        disableGoogleAnalytics: false,
        alwaysShowWidget: false,
        forceFullPageWidget: false,
@@ -159,7 +159,7 @@
      params() {
        return {
          widget_customization: {
-           max_cookie_expiration_days: this.maxcookieExpirationDays,
+           cookie_expiration_days: this.cookieExpirationDays,
            disable_google_analytics: this.disableGoogleAnalytics,
            always_show_widget: this.alwaysShowWidget,
            force_full_page_widget: this.forceFullPageWidget,
