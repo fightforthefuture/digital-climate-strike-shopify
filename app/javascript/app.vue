@@ -126,15 +126,42 @@
         </v-btn>
       </v-snackbar>
     </v-content>
+    <div class="loading-screen" v-show="loading">
+      <div>
+        <div class="loading-circle"></div>
+      </div>
+    </div>
   </v-app>
 </template>
 
 <script>
- import widgetCustomization from 'api/widget_customization'
+ import shopApi from 'api/shop'
 
  export default {
+   mounted() {
+     this.loading = true
+     shopApi.get(
+       (data) => {
+         this.cookieExpirationDays = data.attributes.cookie_expiration_days
+         this.disableGoogleAnalytics = data.attributes.disable_google_analytics
+         this.alwaysShowWidget = data.attributes.always_show_widget
+         this.forceFullPageWidget = data.attributes.force_full_page_widget
+         this.showCloseButtonOnFullPageWidget = data.attributes.show_close_button_on_full_page_widget
+         this.fullPageDisplayStartDate = data.attributes.full_page_display_start_date
+         this.footerDisplayStartDate = data.attributes.footer_display_start_date
+         this.iframeHost = data.attributes.iframe_host
+         this.loading = false
+       },
+       (errors) => {
+         this.message = "Couldn't load shop's widget params"
+         this.snackbar = true
+         this.loading = false
+       }
+     )
+   },
    data: function () {
      return {
+       loading: false,
        message: "",
        snackbar: false,
        max: 30,
@@ -173,14 +200,17 @@
    },
    methods: {
      updateWidget() {
+       this.loading = true
        widgetCustomization.update(this.params,
                                   (data) => {
                                     this.message = "Widget Customization successfully updated"
                                     this.snackbar = true
+                                    this.loading = false
                                   },
                                   (errors) => {
                                     this.message = "Widget Customization unsuccessfully updated"
                                     this.snackbar = true
+                                    this.loading = false
                                   })
      }
    }
@@ -194,5 +224,35 @@
  }
  .v-input--slider {
    margin-top: 24px;
+ }
+ .loading-screen {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100vh;
+   width: 100vw;
+   position: fixed;
+   top: 0;
+   left: 0;
+   z-index: 300;
+   flex-direction: column;
+   user-select: none;
+   background-color: rgba(0, 0, 0,0.392);
+ }
+ .loading-circle {
+   width: 50px;
+   height: 50px;
+   border-radius: 100%;
+   border: 2px solid transparent;
+   border-left-color: green;
+   animation: circleanimation .45s linear infinite
+ }
+ @keyframes circleanimation {
+   from {
+     transform: rotateZ(0deg);
+   }
+   to {
+     transform: rotateZ(360deg);
+   }
  }
 </style>

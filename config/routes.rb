@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   mount ShopifyApp::Engine, at: '/'
-  post "widget_customization/update", to: "widget_customization#update"
+
+  post "shop/update", to: "shop#update"
+  get "shop", to: "shop#show"
+
   root to: 'home#index'
 end
