@@ -110,14 +110,33 @@
           </v-flex>
         </v-layout>
       </v-container>
+
+      <v-snackbar
+        v-model="snackbar"
+        :bottom="true"
+        :right="true"
+        :timeout="3000"
+        :vertical="true">
+        {{ message }}
+        <v-btn
+          color="green darken-2"
+          flat
+          @click="snackbar = false">
+          Close
+        </v-btn>
+      </v-snackbar>
     </v-content>
   </v-app>
 </template>
 
 <script>
+ import widgetCustomization from 'api/widget_customization'
+
  export default {
    data: function () {
      return {
+       message: "",
+       snackbar: false,
        max: 30,
        min: 1,
        maxcookieExpirationDays: 1,
@@ -136,8 +155,33 @@
      }
    },
 
+   computed: {
+     params() {
+       return {
+         widget_customization: {
+           max_cookie_expiration_days: this.maxcookieExpirationDays,
+           disable_google_analytics: this.disableGoogleAnalytics,
+           always_show_widget: this.alwaysShowWidget,
+           force_full_page_widget: this.forceFullPageWidget,
+           show_close_button_on_full_page_widget: this.showCloseButtonOnFullPageWidget,
+           full_page_display_start_date: this.fullPageDisplayStartDate,
+           footer_display_start_date: this.footerDisplayStartDate,
+           iframe_host: this.iframeHost
+         }
+       }
+     }
+   },
    methods: {
      updateWidget() {
+       widgetCustomization.update(this.params,
+                                  (data) => {
+                                    this.message = "Widget Customization successfully updated"
+                                    this.snackbar = true
+                                  },
+                                  (errors) => {
+                                    this.message = "Widget Customization unsuccessfully updated"
+                                    this.snackbar = true
+                                  })
      }
    }
  }

@@ -11,6 +11,8 @@ x-common-variables: &common-variables
   SHOPIFY_API_KEY: ${GCS_SHOPIFY_API_KEY:-FAKE_API_KEY}
   SHOPIFY_API_SECRET: ${GCS_SHOPIFY_API_SECRET:-FAKE_SECRET}
   app_host: ${APP_HOST:-digital-climate-strike-shopify-app.ngrok.io}
+  DCS_AWS_ACCESS_KEY_ID: ${DCS_AWS_ACCESS_KEY_ID:-FAKE-SECRET}
+  DCS_AWS_SECRET_ACCESS_KEY: ${DCS_AWS_SECRET_ACCESS_KEY:-FAKE-SECRET}
 
 services:
   app: &app
