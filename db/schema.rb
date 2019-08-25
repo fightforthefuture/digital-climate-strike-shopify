@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_23_233554) do
+ActiveRecord::Schema.define(version: 2019_08_25_191359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 2019_08_23_233554) do
     t.string "iframe_host", default: "https://assets.digitalclimatestrike.net", null: false
     t.integer "cookie_expiration_days", default: 1, null: false
     t.string "uuid"
+    t.string "vars_script_tag"
+    t.string "dcs_script_tag"
     t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
   end
 

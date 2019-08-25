@@ -1,4 +1,4 @@
-class CreateDcsScriptTagVars
+class UpdateDcsScriptTagVars
   include Callable
 
   delegate :script_file,
@@ -11,10 +11,11 @@ class CreateDcsScriptTagVars
   end
 
   def call
-    response = ShopifyAPI::ScriptTag.
-                 new(event: "onload", src: script_file_url)
-    response.save
-    response
+    record = ShopifyAPI::ScriptTag.
+               find(shop.vars_script_tag.to_i)
+    record.src = script_file_url
+    record.save
+    record
   end
 
   private

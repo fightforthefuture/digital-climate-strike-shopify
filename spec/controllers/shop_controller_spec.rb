@@ -25,8 +25,11 @@ describe ShopController, type: :controller do
   end
 
   before do
-    allow(double_shopify_api).to receive(:save).and_return(true)
+    allow(double_shopify_api).to receive(:id).and_return(12341234)
+    allow(double_shopify_api).to receive(:save).and_return(double_shopify_api)
+    allow(double_shopify_api).to receive(:src=).and_return(double_shopify_api)
     allow(ShopifyAPI::ScriptTag).to receive(:new).and_return(double_shopify_api)
+    allow(ShopifyAPI::ScriptTag).to receive(:find).and_return(double_shopify_api)
     prepare
   end
 
