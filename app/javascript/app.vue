@@ -185,7 +185,7 @@
    computed: {
      params() {
        return {
-         widget_customization: {
+         shop: {
            cookie_expiration_days: this.cookieExpirationDays,
            disable_google_analytics: this.disableGoogleAnalytics,
            always_show_widget: this.alwaysShowWidget,
@@ -201,7 +201,7 @@
    methods: {
      updateWidget() {
        this.loading = true
-       widgetCustomization.update(this.params,
+       shopApi.update(this.params,
                                   (data) => {
                                     this.message = "Widget Customization successfully updated"
                                     this.snackbar = true

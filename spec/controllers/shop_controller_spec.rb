@@ -9,9 +9,9 @@ describe ShopController, type: :controller do
     allow(controller).to receive(:request).and_return(request)
     allow(controller).to receive(:current_shop).and_return(shop)
   end
-  let (:widget_customization_params) do
+  let (:shop_params) do
     {
-      widget_customization: {
+      shop: {
         disable_google_analytics: true,
         force_full_page_widget: true,
         always_show_widget: true,
@@ -34,7 +34,7 @@ describe ShopController, type: :controller do
     context "when there is a current shop" do
       it "updates shop widget customization fields" do
         expect {
-          put :update, params: widget_customization_params
+          put :update, params: shop_params
           expect(response.status).to eq 200
         }.to change { shop.reload.cookie_expiration_days }.to(10)
       end
@@ -43,7 +43,7 @@ describe ShopController, type: :controller do
     context "when there is no current shop" do
       it "returns :unprocessable_entity" do
         allow(controller).to receive(:current_shop).and_return(nil)
-        put :update, params: widget_customization_params
+        put :update, params: shop_params
         expect(response.status).to eq 422
       end
     end
