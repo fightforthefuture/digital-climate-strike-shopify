@@ -1,7 +1,7 @@
 class ShopController < AuthenticatedController
   def update
     if current_shop.present?
-      current_shop.update widget_customization_params
+      current_shop.update shop_params
       current_shop.update_script_vars
       head :ok
     else
@@ -38,9 +38,9 @@ class ShopController < AuthenticatedController
 
   private
 
-  def widget_customization_params
+  def shop_params
     params.
-      required(:widget_customization).
+      required(:shop).
       permit(:always_show_widget,
              :disable_google_analytics,
              :footer_display_start_date,
