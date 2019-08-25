@@ -2,7 +2,7 @@ class ShopController < AuthenticatedController
   def update
     if current_shop.present?
       current_shop.update shop_params
-      current_shop.update_script_vars
+      current_shop.update_script_tag_in_shopify
       head :ok
     else
       render json: { errors: [
