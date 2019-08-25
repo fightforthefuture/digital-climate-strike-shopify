@@ -9,6 +9,8 @@ RUN apk add --no-cache \
   ca-certificates \
   chromium \
   chromium-chromedriver \
+  libpq \
+  postgresql-dev \
   git \
   less \
   nodejs \
