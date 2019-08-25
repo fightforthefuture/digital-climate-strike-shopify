@@ -1,5 +1,8 @@
 version: "3.7"
 
+volumes:
+  postgres_data:
+
 networks:
   backend:
 
@@ -13,8 +16,25 @@ x-common-variables: &common-variables
   app_host: ${APP_HOST:-digital-climate-strike-shopify-app.ngrok.io}
   DCS_AWS_ACCESS_KEY_ID: ${DCS_AWS_ACCESS_KEY_ID:-FAKE-SECRET}
   DCS_AWS_SECRET_ACCESS_KEY: ${DCS_AWS_SECRET_ACCESS_KEY:-FAKE-SECRET}
+  DATABASE_NAME: dcs_development
+  DATABASE_USERNAME: postgres
+  DATABASE_HOST: db
+  DATABASE_PORT: 5432
+  DATABASE_PASSWORD: 12341234
 
 services:
+  db:
+    image: postgres:9.6.2
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      LC_ALL: C.UTF-8
+      POSTGRES_PASSWORD: 12341234
+    networks:
+      - backend
+
   app: &app
     image: fightforthefuture/shopify-global-climate-strikes-app:development
     build:
@@ -37,6 +57,8 @@ services:
       - 3035:3035
     environment:
       <<: *common-variables
+    depends_on:
+      - db
     networks:
       - backend
 
@@ -50,10 +72,12 @@ services:
     command: bundle exec rspec
     environment:
       <<: *common-variables
+      DATABASE_NAME: dcs_test
       RAILS_ENV: test
       RACK_ENV: test
     depends_on:
       - chrome
+      - db
     networks:
       - backend
 

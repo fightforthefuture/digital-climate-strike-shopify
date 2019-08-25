@@ -12,11 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2019_08_23_233554) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -42,7 +45,7 @@ ActiveRecord::Schema.define(version: 2019_08_23_233554) do
     t.boolean "force_full_page_widget", default: false, null: false
     t.boolean "always_show_widget", default: false, null: false
     t.boolean "show_close_button_on_full_page_widget", default: false, null: false
-    t.date "footer_display_start_date", default: "2019-08-23"
+    t.date "footer_display_start_date", default: "2019-08-25"
     t.date "full_page_display_start_date", default: "2019-08-20"
     t.string "iframe_host", default: "https://assets.digitalclimatestrike.net", null: false
     t.integer "cookie_expiration_days", default: 1, null: false
