@@ -24,81 +24,77 @@
                       v-model="iframeHost"
                       required
                       :rules="iframeHostRules"
-                      label="Override the iFrame hostname"></v-text-field>
+                      label="If you would like to self-host the iFrame source code, you can configure the hostname for this here."></v-text-field>
 
                     <v-checkbox
                       v-model="disableGoogleAnalytics"
-                      label="Disable Google Analytics"></v-checkbox>
+                      label="Removes Google Analytics tracking from the banner."></v-checkbox>
 
                     <v-checkbox
                       v-model="alwaysShowWidget"
-                      label="Always show Widget"></v-checkbox>
+                      label="Even if someone has closed the widget, this will make it show. Useful for testing purposes."></v-checkbox>
 
                     <v-checkbox
                       v-model="forceFullPageWidget"
-                      label="Force full page Widget"></v-checkbox>
+                      label="Enforces the full page widget. Useful for testing."></v-checkbox>
 
                     <v-checkbox
                       v-model="showCloseButtonOnFullPageWidget"
-                      label="Show close button on full page"></v-checkbox>
-                    <v-layout wrap justify-space-between>
-                      <v-flex xs12 md6>
-                        <v-dialog
-                          ref="dialogFooterDisplayStartDate"
-                          v-model="modalFooterDisplayStartDate"
-                          :return-value.sync="footerDisplayStartDate"
-                          persistent
-                          lazy
-                          full-width
-                          width="290px">
-                          <template v-slot:activator="{ on }">
-                            <v-text-field
-                              v-model="footerDisplayStartDate"
-                              label="The date when the sticky footer widget should start showing"
-                              prepend-icon="event"
-                              readonly
-                              v-on="on"></v-text-field>
-                          </template>
-                          <v-date-picker v-model="footerDisplayStartDate" scrollable>
-                            <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="modalFooterDisplayStartDate = false">Cancel</v-btn>
-                            <v-btn flat color="primary" @click="$refs.dialogFooterDisplayStartDate.save(footerDisplayStartDate)">OK</v-btn>
-                          </v-date-picker>
-                        </v-dialog>
-                      </v-flex>
+                      label="Makes the full page banner closeable, in case your site is unable to do a complete shutdown on September 20."></v-checkbox>
 
-                      <v-flex xs12 md6>
-                        <v-dialog
-                          ref="dialogFullPageDisplayStartDate"
-                          v-model="modalFullPageDisplayStartDate"
-                          :return-value.sync="fullPageDisplayStartDate"
-                          persistent
-                          lazy
-                          full-width
-                          width="290px">
-                          <template v-slot:activator="{ on }">
-                            <v-text-field
-                              v-model="fullPageDisplayStartDate"
-                              label="The date when the full page widget should show for 24 hours"
-                              prepend-icon="event"
-                              readonly
-                              v-on="on"></v-text-field>
-                          </template>
-                          <v-date-picker v-model="fullPageDisplayStartDate" scrollable>
-                            <v-spacer></v-spacer>
-                            <v-btn flat color="primary" @click="modalFullPageDisplayStartDate = false">Cancel</v-btn>
-                            <v-btn flat color="primary" @click="$refs.dialogFullPageDisplayStartDate.save(fullPageDisplayStartDate)">OK</v-btn>
-                          </v-date-picker>
-                        </v-dialog>
-                      </v-flex>
+                    <v-dialog
+                      ref="dialogFooterDisplayStartDate"
+                      v-model="modalFooterDisplayStartDate"
+                      :return-value.sync="footerDisplayStartDate"
+                      persistent
+                      lazy
+                      full-width
+                      width="290px">
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="footerDisplayStartDate"
+                          label="Allows you to set the date when the footer banner should start showing. It defaults to an arbitrary date in the past."
+                          prepend-icon="event"
+                          readonly
+                          v-on="on"></v-text-field>
+                      </template>
+                      <v-date-picker v-model="footerDisplayStartDate" scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn flat color="primary" @click="modalFooterDisplayStartDate = false">Cancel</v-btn>
+                        <v-btn flat color="primary" @click="$refs.dialogFooterDisplayStartDate.save(footerDisplayStartDate)">OK</v-btn>
+                      </v-date-picker>
+                    </v-dialog>
 
-                      <v-slider
-                        v-model="cookieExpirationDays"
-                        thumb-label="always"
-                        :max="max"
-                        :min="min"
-                        label="Cookie expiration days"></v-slider>
-                    </v-layout>
+                    <v-dialog
+                      ref="dialogFullPageDisplayStartDate"
+                      v-model="modalFullPageDisplayStartDate"
+                      :return-value.sync="fullPageDisplayStartDate"
+                      persistent
+                      lazy
+                      full-width
+                      width="290px">
+                      <template v-slot:activator="{ on }">
+                        <v-text-field
+                          v-model="fullPageDisplayStartDate"
+                          label="Allows you to set the date when the full page banner should show."
+                          prepend-icon="event"
+                          readonly
+                          v-on="on"></v-text-field>
+                      </template>
+                      <v-date-picker v-model="fullPageDisplayStartDate" scrollable>
+                        <v-spacer></v-spacer>
+                        <v-btn flat color="primary" @click="modalFullPageDisplayStartDate = false">Cancel</v-btn>
+                        <v-btn flat color="primary" @click="$refs.dialogFullPageDisplayStartDate.save(fullPageDisplayStartDate)">OK</v-btn>
+                      </v-date-picker>
+                    </v-dialog>
+
+                    If the user closes the banner, we set a cookie so they won't see it again on that device of this number of days.
+                    <v-slider
+                      v-model="cookieExpirationDays"
+                      thumb-label="always"
+                      :thumb-size="24"
+                      :max="max"
+                      :min="min"></v-slider>
 
                     <v-btn @click="updateWidget" color="success">
                       Update
@@ -202,16 +198,16 @@
      updateWidget() {
        this.loading = true
        shopApi.update(this.params,
-                                  (data) => {
-                                    this.message = "Widget Customization successfully updated"
-                                    this.snackbar = true
-                                    this.loading = false
-                                  },
-                                  (errors) => {
-                                    this.message = "Widget Customization unsuccessfully updated"
-                                    this.snackbar = true
-                                    this.loading = false
-                                  })
+                      (data) => {
+                        this.message = "Widget Customization successfully updated"
+                        this.snackbar = true
+                        this.loading = false
+                      },
+                      (errors) => {
+                        this.message = "Widget Customization unsuccessfully updated"
+                        this.snackbar = true
+                        this.loading = false
+                      })
      }
    }
  }
