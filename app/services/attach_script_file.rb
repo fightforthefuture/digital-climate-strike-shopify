@@ -10,6 +10,7 @@ class AttachScriptFile
            :show_close_button_on_full_page_widget,
            :footer_display_start_date,
            :full_page_display_start_date,
+           :i18n,
            :script_file,
            to: :shop
 
@@ -40,6 +41,6 @@ class AttachScriptFile
   end
 
   def widget_customization_as_js_content
-    "var DIGITAL_CLIMATE_STRIKE_OPTIONS={cookieExpirationDays:#{cookie_expiration_days},iframeHost:'#{iframe_host}',disableGoogleAnalytics:#{disable_google_analytics},alwaysShowWidget:#{always_show_widget},forceFullPageWidget:#{force_full_page_widget},showCloseButtonOnFullPageWidget:#{show_close_button_on_full_page_widget},footerDisplayStartDate: new Date(#{footer_display_start_date.year},#{footer_display_start_date.month},#{footer_display_start_date.day}), fullPageDisplayStartDate: new Date(#{full_page_display_start_date.year},#{full_page_display_start_date.month},#{full_page_display_start_date.day})};"
+    "var DIGITAL_CLIMATE_STRIKE_OPTIONS={language:#{i18n.blank? ? 'null' : "'" + i18n + "'"},cookieExpirationDays:#{cookie_expiration_days},iframeHost:'#{iframe_host}',disableGoogleAnalytics:#{disable_google_analytics},alwaysShowWidget:#{always_show_widget},forceFullPageWidget:#{force_full_page_widget},showCloseButtonOnFullPageWidget:#{show_close_button_on_full_page_widget},footerDisplayStartDate: new Date(#{footer_display_start_date.year},#{footer_display_start_date.month},#{footer_display_start_date.day}), fullPageDisplayStartDate: new Date(#{full_page_display_start_date.year},#{full_page_display_start_date.month},#{full_page_display_start_date.day})};"
   end
 end

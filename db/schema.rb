@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_25_191359) do
+ActiveRecord::Schema.define(version: 2019_09_05_012112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2019_08_25_191359) do
     t.string "uuid"
     t.string "vars_script_tag"
     t.string "dcs_script_tag"
+    t.string "i18n"
     t.index ["shopify_domain"], name: "index_shops_on_shopify_domain", unique: true
   end
 

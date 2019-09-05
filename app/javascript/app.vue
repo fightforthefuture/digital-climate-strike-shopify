@@ -20,6 +20,12 @@
               <v-layout fill-height>
                 <v-flex xs12 align-end flexbox>
                   <form>
+                    <v-select
+                      v-model="selectedI18n"
+                      :items="i18n"
+                      label="Configure the language you want the banner to show as"
+                    ></v-select>
+
                     <v-text-field
                       v-model="iframeHost"
                       required
@@ -146,6 +152,7 @@
          this.fullPageDisplayStartDate = data.attributes.full_page_display_start_date
          this.footerDisplayStartDate = data.attributes.footer_display_start_date
          this.iframeHost = data.attributes.iframe_host
+         this.selectedI18n = data.attributes.i18n
          this.loading = false
        },
        (errors) => {
@@ -157,6 +164,13 @@
    },
    data: function () {
      return {
+       i18n: [
+         { text: "English", value: "en" },
+         { text: "German", value: "de" },
+         { text: "Spanish", value: "es" },
+         { text: "Czech", value: "cz" },
+         { text: "French", value: "fr" }
+       ],
        loading: false,
        message: "",
        snackbar: false,
@@ -172,6 +186,8 @@
        iframeHost: 'https://assets.digitalclimatestrike.net',
        modalFullPageDisplayStartDate: false,
        modalFooterDisplayStartDate: false,
+       selectedI18n: null,
+
        iframeHostRules: [
          v => !!v || 'Name is required',
        ],
@@ -189,7 +205,8 @@
            show_close_button_on_full_page_widget: this.showCloseButtonOnFullPageWidget,
            full_page_display_start_date: this.fullPageDisplayStartDate,
            footer_display_start_date: this.footerDisplayStartDate,
-           iframe_host: this.iframeHost
+           iframe_host: this.iframeHost,
+           i18n: this.selectedI18n
          }
        }
      }

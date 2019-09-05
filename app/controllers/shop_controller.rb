@@ -30,7 +30,8 @@ class ShopController < AuthenticatedController
                full_page_display_start_date: current_shop.full_page_display_start_date.strftime("%F"),
                iframe_host: current_shop.iframe_host,
                cookie_expiration_days: current_shop.cookie_expiration_days,
-               show_close_button_on_full_page_widget: current_shop.show_close_button_on_full_page_widget
+               show_close_button_on_full_page_widget: current_shop.show_close_button_on_full_page_widget,
+               i18n: current_shop.i18n
              }
            },
            status: :ok
@@ -48,6 +49,7 @@ class ShopController < AuthenticatedController
              :full_page_display_start_date,
              :iframe_host,
              :cookie_expiration_days,
-             :show_close_button_on_full_page_widget)
+             :show_close_button_on_full_page_widget,
+             :i18n)
   end
 end
