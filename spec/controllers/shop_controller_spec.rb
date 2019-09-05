@@ -19,7 +19,8 @@ describe ShopController, type: :controller do
         footer_display_start_date: Date.current + 2.days,
         full_page_display_start_date: Date.new(2019, 8, 20) + 10.days,
         iframe_host: "https://assets.fakedigitalclimatestrike.net",
-        cookie_expiration_days: 10
+        cookie_expiration_days: 10,
+        i18n: nil
       }
     }
   end
@@ -30,6 +31,7 @@ describe ShopController, type: :controller do
     allow(double_shopify_api).to receive(:src=).and_return(double_shopify_api)
     allow(ShopifyAPI::ScriptTag).to receive(:new).and_return(double_shopify_api)
     allow(ShopifyAPI::ScriptTag).to receive(:find).and_return(double_shopify_api)
+    allow_any_instance_of(Shop).to receive(:delete_current_script_tags).and_return(true)
     prepare
   end
 
@@ -66,7 +68,8 @@ describe ShopController, type: :controller do
                                                   "full_page_display_start_date" => shop.full_page_display_start_date.strftime("%F"),
                                                   "iframe_host" => shop.iframe_host,
                                                   "cookie_expiration_days" => shop.cookie_expiration_days,
-                                                  "show_close_button_on_full_page_widget" => shop.show_close_button_on_full_page_widget
+                                                  "show_close_button_on_full_page_widget" => shop.show_close_button_on_full_page_widget,
+                                                  "i18n" => shop.i18n
                                                 }
                                               })
     end
