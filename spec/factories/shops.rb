@@ -10,6 +10,7 @@ FactoryBot.define do
     full_page_display_start_date { Date.new(2019, 8, 20) }
     iframe_host { "https://assets.digitalclimatestrike.net" }
     cookie_expiration_days { 1 }
+    i18n { nil }
     uuid { SecureRandom.uuid}
   end
 end
